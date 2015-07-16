@@ -6,6 +6,7 @@
 	"applause.coffee",
 	"b6n.coffee",
 	"carlton.coffee",
-	"commandlinefu.coffee"
+	"commandlinefu.coffee",
+	"redmine.coffee"
 
 ]
