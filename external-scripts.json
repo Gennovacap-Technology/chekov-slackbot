@@ -1,6 +1,5 @@
 [
   "hubot-auth",
-  "hubot-cron",
   "hubot-diagnostics",
   "hubot-help",
   "hubot-heroku-keepalive",
