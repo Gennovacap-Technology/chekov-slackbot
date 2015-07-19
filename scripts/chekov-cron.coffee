@@ -94,7 +94,7 @@ module.exports = (robot) ->
     if robot.auth.hasRole(msg.envelope.user, 'admin')
       text = ''
       for id, job of JOBS
-        text += "#{id}: #{job.pattern} @#{msg.message.user.room} \"#{job.message}\" for #{job.role}\n"
+        text += "#{id}: #{job.pattern} @#{msg.message.user.room} \"#{job.message}\" for #{job.role} (Timezone: #{job.timezone})\n"
       msg.send text if text.length > 0
     else
       msg.send "This user is not allowed to list jobs."
