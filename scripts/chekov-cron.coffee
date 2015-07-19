@@ -11,6 +11,7 @@
 #
 # Author:
 #   miyagawa
+#   anderson
 
 cronJob = require('cron').CronJob
 
