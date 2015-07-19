@@ -85,27 +85,26 @@ module.exports = (robot) ->
 
   
   robot.respond /(?:new|add) job (.*) "(.*?)" to (.*) *$/i, (msg) ->
-    console.log("#{msg.match[3]} #{msg.match[1]}, #{msg.match[2]}")
-    handleNewJob robot, msg, msg.match[3], msg.match[1], msg.match[2]
+    if robot.auth.hasRole(msg.envelope.user, 'admin')
+      handleNewJob robot, msg, msg.match[3], msg.match[1], msg.match[2]
+    else
+      msg.send "You're not allowed to create role jobs."
 
   robot.respond /(?:list|ls) jobs?/i, (msg) ->
-    text = ''
-    for id, job of JOBS
-      text += "#{id}: #{job.pattern} @#{msg.message.user.room} \"#{job.message}\" for #{job.role}\n"
-    msg.send text if text.length > 0
+    if robot.auth.hasRole(msg.envelope.user, 'admin')
+      text = ''
+      for id, job of JOBS
+        text += "#{id}: #{job.pattern} @#{msg.message.user.room} \"#{job.message}\" for #{job.role}\n"
+      msg.send text if text.length > 0
+    else
+      msg.send "This user is not allowed to list jobs."
 
   robot.respond /(?:rm|remove|del|delete) job (\d+)/i, (msg) ->
-    if (id = msg.match[1]) and unregisterJob(robot, id)
-      msg.send "Job #{id} deleted"
-    else
-      msg.send "Job #{id} does not exist"
-
-  robot.respond /(?:rm|remove|del|delete) job with message (.+)/i, (msg) ->
-    message = msg.match[1]
-    for id, job of JOBS
-      room = job.user.reply_to || job.user.room
-      if (room == msg.message.user.reply_to or room == msg.message.user.room) and job.message == message and unregisterJob(robot, id)
+    if robot.auth.hasRole(msg.envelope.user, 'admin')
+      if (id = msg.match[1]) and unregisterJob(robot, id)
         msg.send "Job #{id} deleted"
+      else
+        msg.send "Job #{id} does not exist"
 
   robot.respond /(?:tz|timezone) job (\d+) (.*)/i, (msg) ->
     if (id = msg.match[1]) and (timezone = msg.match[2]) and updateJobTimezone(robot, id, timezone)
