@@ -91,7 +91,7 @@ module.exports = (robot) ->
   robot.respond /(?:list|ls) jobs?/i, (msg) ->
     text = ''
     for id, job of JOBS
-      text += "#{id}: #{job.pattern} @#{msg.message.user.room} \"#{job.message}\"\n"
+      text += "#{id}: #{job.pattern} @#{msg.message.user.room} \"#{job.message}\" for #{job.role}\n"
     msg.send text if text.length > 0
 
   robot.respond /(?:rm|remove|del|delete) job (\d+)/i, (msg) ->
