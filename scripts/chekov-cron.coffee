@@ -148,7 +148,7 @@ class Job
 
   sendMessageToRoles: (robot) ->
     recipients = robot.auth.usersWithRole('admin').concat ['htest'] 
-    for user in robot.auth.usersWithRole('admin')
+    for user in recipients
       envelope = user: @user, room: @user
       robot.send envelope, @message
 
