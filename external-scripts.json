@@ -11,5 +11,6 @@
   "hubot-redis-brain",
   "hubot-rules",
   "hubot-shipit",
-  "hubot-hotbot"
+  "hubot-hotbot",
+  "hubot-room-info"
 ]
