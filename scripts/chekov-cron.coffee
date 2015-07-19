@@ -85,6 +85,7 @@ module.exports = (robot) ->
 
   
   robot.respond /(?:new|add) job (.*) "(.*?)" to (.*) *$/i, (msg) ->
+    console.log("#{msg.match[3]} #{msg.match[1]}, #{msg.match[2]}")
     handleNewJob robot, msg, msg.match[3], msg.match[1], msg.match[2]
 
   robot.respond /(?:list|ls) jobs?/i, (msg) ->
