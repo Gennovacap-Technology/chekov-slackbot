@@ -1,4 +1,5 @@
 [
+	"auth.coffee",
 	"alot.coffee",
 	"marvin-quotes.coffee",
 	"yoda-quotes.coffee",
@@ -7,6 +8,8 @@
 	"b6n.coffee",
 	"carlton.coffee",
 	"commandlinefu.coffee",
-	"redmine.coffee"
+	"redmine.coffee",
+    "reload.coffee",
+    "room-info.coffee"
 
 ]
