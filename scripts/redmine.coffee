@@ -269,8 +269,8 @@ printIssues = (data) ->
   for issue in data.issues
     do (issue) ->
       url = "#{redmine.url}/issues/#{issue.id}"
-      issues_list.push "\n[#{issue.tracker.name} - #{issue.priority.name} - #{issue.status.name}] ##{issue.id}: #{issue.subject} \n #{url}"
-  issues_list.join "\n"
+      _.push "\n[#{issue.tracker.name} - #{issue.priority.name} - #{issue.status.name}] ##{issue.id}: #{issue.subject} \n #{url}"
+  _.join "\n"
 
 # simple ghetto fab date formatter this should definitely be replaced, but didn't want to
 # introduce dependencies this early
