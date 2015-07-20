@@ -250,6 +250,33 @@ module.exports = (robot) ->
       url = "#{redmine.url}/issues/#{id}"
       msg.send "#{issue.tracker.name} #{url} (#{issue.project.name}): #{issue.subject} (#{issue.status.name}) [#{issue.priority.name}]"
 
+# Robot show all issues for (project_id)
+  robot.respond /show all issues for (.*)/i, (msg) ->
+    
+    projectId = msg.match[1]
+      
+    params =
+      "project_id": projectId,
+      "limit": 500,
+      "sort": "priority:desc",
+
+    redmine.Issues params, (err, data) ->
+      if err?
+        msg.reply "Couldn't get a list of issues for you!"
+      else
+        _ = []
+
+        if userMode
+          _.push "You have #{data.total_count} issue(s)."
+        else
+          _.push "#{user.firstname} has #{data.total_count} issue(s)."
+
+        for issue in data.issues
+          do (issue) ->
+            _.push "\n[#{issue.tracker.name} - #{issue.priority.name} - #{issue.status.name}] ##{issue.id}: #{issue.subject}"
+
+        msg.reply _.join "\n"
+
 # simple ghetto fab date formatter this should definitely be replaced, but didn't want to
 # introduce dependencies this early
 #
