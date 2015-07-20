@@ -122,7 +122,8 @@ module.exports = (robot) ->
 
           for issue in data.issues
             do (issue) ->
-              _.push "\n[#{issue.tracker.name} - #{issue.priority.name} - #{issue.status.name}] ##{issue.id}: #{issue.subject}"
+              url = "#{redmine.url}/issues/#{issue.id}"
+              _.push "\n[#{issue.tracker.name} - #{issue.priority.name} - #{issue.status.name}] ##{issue.id}: #{issue.subject} <#{url}>"
 
           msg.reply _.join "\n"
 
