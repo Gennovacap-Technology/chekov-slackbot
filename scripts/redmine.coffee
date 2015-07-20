@@ -120,7 +120,7 @@ module.exports = (robot) ->
           else
             _.push "#{user.firstname} has #{data.total_count} issue(s)."
 
-          msg.reply printIssues(data.issues)
+          msg.reply printIssues(data)
 
   # Robot update <issue> with "<note>"
   robot.respond /update (?:issue )?(?:#)?(\d+)(?:\s*with\s*)?(?:[-:,])? (?:"?([^"]+)"?)/i, (msg) ->
