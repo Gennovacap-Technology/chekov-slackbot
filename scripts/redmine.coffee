@@ -120,7 +120,7 @@ module.exports = (robot) ->
           else
             _.push "#{user.firstname} has #{data.total_count} issue(s)."
 
-          msg.reply printIssues(data.issues, _)
+          msg.reply printIssues(data.issues)
 
   # Robot update <issue> with "<note>"
   robot.respond /update (?:issue )?(?:#)?(\d+)(?:\s*with\s*)?(?:[-:,])? (?:"?([^"]+)"?)/i, (msg) ->
@@ -260,13 +260,13 @@ module.exports = (robot) ->
       if err?
         msg.reply "Couldn't get a list of issues for you!"
       else
-        _ = []
-        _.push "#Total: #{data.total_count} issue(s)."
-        msg.reply printIssues(data.issues, _)
+        msg.reply printIssues(data)
 
 
-printIssues = (issues, issues_list) ->
-  for issue in issues
+printIssues = (data) ->
+  _ = []
+  _.push "#Total: #{data.total_count} issue(s)."
+  for issue in data.issues
     do (issue) ->
       url = "#{redmine.url}/issues/#{issue.id}"
       issues_list.push "\n[#{issue.tracker.name} - #{issue.priority.name} - #{issue.status.name}] ##{issue.id}: #{issue.subject} \n #{url}"
