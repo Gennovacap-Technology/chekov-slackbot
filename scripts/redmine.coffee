@@ -120,12 +120,7 @@ module.exports = (robot) ->
           else
             _.push "#{user.firstname} has #{data.total_count} issue(s)."
 
-          for issue in data.issues
-            do (issue) ->
-              url = "#{redmine.url}/issues/#{issue.id}"
-              _.push "\n[#{issue.tracker.name} - #{issue.priority.name} - #{issue.status.name}] ##{issue.id}: #{issue.subject} \n #{url}"
-
-          msg.reply _.join "\n"
+          msg.reply printIssues(data.issues, _)
 
   # Robot update <issue> with "<note>"
   robot.respond /update (?:issue )?(?:#)?(\d+)(?:\s*with\s*)?(?:[-:,])? (?:"?([^"]+)"?)/i, (msg) ->
@@ -267,12 +262,15 @@ module.exports = (robot) ->
       else
         _ = []
         _.push "#Total: #{data.total_count} issue(s)."
+        msg.reply printIssues(data.issues, _)
 
-        for issue in data.issues
-          do (issue) ->
-            _.push "\n[#{issue.tracker.name} - #{issue.priority.name} - #{issue.status.name}] ##{issue.id}: #{issue.subject}"
 
-        msg.reply _.join "\n"
+printIssues = (issues, issues_list) ->
+  for issue in issues
+    do (issue) ->
+      url = "#{redmine.url}/issues/#{issue.id}"
+      issues_list.push "\n[#{issue.tracker.name} - #{issue.priority.name} - #{issue.status.name}] ##{issue.id}: #{issue.subject} \n #{url}"
+  issues_list.join "\n"
 
 # simple ghetto fab date formatter this should definitely be replaced, but didn't want to
 # introduce dependencies this early
