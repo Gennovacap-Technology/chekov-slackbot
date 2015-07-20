@@ -265,7 +265,7 @@ module.exports = (robot) ->
         msg.reply "Couldn't get a list of issues for you!"
       else
         _ = []
-        _.push "#{user.firstname} has #{data.total_count} issue(s)."
+        _.push "#Total: #{data.total_count} issue(s)."
 
         for issue in data.issues
           do (issue) ->
