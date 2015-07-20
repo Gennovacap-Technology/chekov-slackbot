@@ -49,13 +49,13 @@ module.exports = (robot) ->
     [id, percent, notes] = msg.match[1..3]
     percent = parseInt percent
 
-    if notes?
-      notes = "#{msg.message.user.name}: #{notes}"
-    else
-      notes = "Ratio set by: #{msg.message.user.name}"
+    
+    update_note = if notes? then "#{notes}" else "Ratio set by: #{msg.message.user.name}"
 
+    console.log notes
+    
     attributes =
-      "notes": notes
+      "notes": update_note
       "done_ratio": percent
 
     redmine.Issue(id).update attributes, (err, data, status) ->
