@@ -119,9 +119,13 @@ module.exports = (robot) ->
             _.push "You have #{data.total_count} issue(s)."
           else
             _.push "#{user.firstname} has #{data.total_count} issue(s)."
-
             
-          msg.reply printIssues(data)
+          _.push "#Total: #{data.total_count} issue(s)."
+          for issue in data.issues
+            do (issue) ->
+              url = "#{redmine.url}/issues/#{issue.id}"
+              _.push "\n[#{issue.tracker.name} - #{issue.priority.name} - #{issue.status.name}] ##{issue.id}: #{issue.subject} \n #{url}"
+          msg.reply _.join "\n"
 
   # Robot update <issue> with "<note>"
   robot.respond /update (?:issue )?(?:#)?(\d+)(?:\s*with\s*)?(?:[-:,])? (?:"?([^"]+)"?)/i, (msg) ->
@@ -270,15 +274,6 @@ module.exports = (robot) ->
         msg.reply _.join "\n"
         
 
-
-printIssues = (data) ->
-  _ = []
-  _.push "#Total: #{data.total_count} issue(s)."
-  for issue in data.issues
-    do (issue) ->
-      url = "#{redmine.url}/issues/#{issue.id}"
-      _.push "\n[#{issue.tracker.name} - #{issue.priority.name} - #{issue.status.name}] ##{issue.id}: #{issue.subject} \n #{url}"
-  _.join "\n"
 
 # simple ghetto fab date formatter this should definitely be replaced, but didn't want to
 # introduce dependencies this early
